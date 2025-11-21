@@ -1,156 +1,68 @@
-# 🧪 Estudos Cypress - Page Object Model (POM)
+# SauceDemo E2E Automation Suite 🧪
 
-Projeto de estudos de automação de testes E2E usando **Cypress** com o padrão **Page Object Model (POM)**.
+Professional End-to-End testing framework built with Cypress, implementing the Page Object Model (POM) design pattern to validate critical flows of the SauceDemo e-commerce platform.
 
-## 🎯 Objetivo
+## 🚀 Project Overview
 
-Implementar testes automatizados para a funcionalidade de login do site [SauceDemo](https://www.saucedemo.com/) seguindo as melhores práticas de Clean Code e arquitetura de testes.
+This project demonstrates a scalable test architecture suitable for enterprise environments. Instead of simple linear scripts, I implemented a modular structure that separates test logic (Specs) from page interactions (Page Objects).
 
-## 📁 Estrutura do Projeto
+**Key Technical Highlights:**
+
+- **Architecture:** Strict Page Object Model (POM) implementation for maintainability.
+- **Clean Code:** Usage of Method Chaining for readable, fluent assertions.
+- **Resilience:** Dynamic selectors avoiding brittle XPaths.
+- **Coverage:** Happy path (Login/Checkout) and Edge cases (Invalid login, Empty fields).
+
+## 🛠️ Tech Stack
+
+- **Cypress (v15.x)** - E2E Testing Framework
+- **JavaScript (ES6+)** - Programming Language
+- **Node.js** - Runtime Environment
+- **VS Code** - IDE
+
+## 📂 Project Structure
 
 ```
-estudos-cypress-pc/
-├── cypress/
-│   ├── e2e/
-│   │   └── login.cy.js           # Testes de login
-│   ├── fixtures/                  # Dados de teste
-│   ├── support/
-│   │   ├── pages/
-│   │   │   └── LoginPage.js      # Page Object da tela de login
-│   │   ├── commands.js           # Comandos customizados
-│   │   └── e2e.js                # Configurações globais
-├── node_modules/
-├── cypress.config.js              # Configuração do Cypress
-├── package.json
-└── README.md
+cypress/
+ ├── e2e/
+ │   ├── login.cy.js        # Login Scenarios (Positive & Negative)
+ │   └── compras.cy.js      # Full Checkout Flow & Sort Logic
+ ├── support/
+ │   └── pages/
+ │       └── LoginPage.js   # Page Object Class (Encapsulated logic)
 ```
 
-## 🚀 Como Executar
+## ⚡ How to Run
 
-### Pré-requisitos
-
-- Node.js (LTS) instalado
-- Git instalado
-
-### Instalação
+**Install Dependencies:**
 
 ```bash
-# Clonar o repositório (se aplicável)
-git clone <url-do-repositorio>
-
-# Entrar na pasta do projeto
-cd estudos-cypress-pc
-
-# Instalar dependências
 npm install
 ```
 
-### Executar os Testes
+**Run Interactive Mode (Cypress App):**
 
 ```bash
-# Abrir interface gráfica do Cypress
 npm run cy:open
-
-# Executar todos os testes em modo headless
-npm test
-
-# Executar apenas os testes de login
-npm run test:login
-
-# Executar no Chrome
-npm run cy:run:chrome
-
-# Executar no Edge
-npm run cy:run:edge
 ```
 
-## 📋 Page Object Model (POM)
+**Run Headless (CI/CD Mode):**
 
-### O que é?
-
-O **Page Object Model** é um padrão de design que cria uma camada de abstração entre os testes e a interface do usuário, tornando o código mais:
-
-- ✅ **Reutilizável**: Métodos podem ser usados em múltiplos testes
-- ✅ **Manutenível**: Mudanças na UI exigem alterações apenas no Page Object
-- ✅ **Legível**: Testes ficam mais semânticos e fáceis de entender
-- ✅ **Escalável**: Facilita a adição de novos testes e páginas
-
-### Estrutura da LoginPage
-
-```javascript
-class LoginPage {
-  // 1. Mapeamento dos elementos
-  elements = {
-    usernameInput: () => cy.get('#user-name'),
-    passwordInput: () => cy.get('#password'),
-    loginButton: () => cy.get('#login-button')
-  }
-
-  // 2. Métodos de ação
-  acessar() { ... }
-  preencherLogin(usuario, senha) { ... }
-  submeter() { ... }
-
-  // 3. Métodos de validação
-  validarLoginSucesso() { ... }
-}
+```bash
+npx cypress run
 ```
 
-### Exemplo de Uso
+## 🧪 Scenarios Covered
 
-```javascript
-import LoginPage from '../support/pages/LoginPage'
-
-describe('Login', () => {
-  const loginPage = new LoginPage()
-
-  it('Deve realizar login com sucesso', () => {
-    loginPage
-      .acessar()
-      .preencherLogin('standard_user', 'secret_sauce')
-      .submeter()
-      .validarLoginSucesso()
-  })
-})
-```
-
-## 🧪 Casos de Teste Implementados
-
-1. ✅ Login com credenciais válidas
-2. ✅ Login com method chaining
-3. ✅ Login com credenciais inválidas
-4. ✅ Login sem preencher usuário
-5. ✅ Login sem preencher senha
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Cypress** v15.7.0 - Framework de testes E2E
-- **Node.js** v24.11.1 - Ambiente de execução JavaScript
-- **JavaScript (ES6+)** - Linguagem de programação
-
-## 📚 Conceitos Aplicados
-
-- ✨ Page Object Model (POM)
-- ✨ Clean Code
-- ✨ Method Chaining
-- ✨ Padrão AAA (Arrange, Act, Assert)
-- ✨ DRY (Don't Repeat Yourself)
-- ✨ Single Responsibility Principle
-
-## 📝 Credenciais de Teste (SauceDemo)
-
-| Usuário | Senha | Descrição |
-|---------|-------|-----------|
-| `standard_user` | `secret_sauce` | Usuário padrão |
-| `locked_out_user` | `secret_sauce` | Usuário bloqueado |
-| `problem_user` | `secret_sauce` | Usuário com problemas |
-| `performance_glitch_user` | `secret_sauce` | Usuário com lentidão |
-
-## 🎓 Autor
-
-Projeto desenvolvido para estudos de automação de testes com Cypress.
+| ID | Scenario | Type | Status |
+|----|----------|------|--------|
+| 01 | Login with valid credentials | Smoke | ✅ Passing |
+| 02 | Block invalid login attempts | Regression | ✅ Passing |
+| 03 | Validate required fields (Username/Password) | Negative | ✅ Passing |
+| 04 | End-to-End Checkout Flow (Purchase) | Critical Path | ✅ Passing |
+| 05 | Product Sorting (Low to High) | Functional | ✅ Passing |
 
 ---
 
-⭐ **Dica**: Explore o código, adicione novos testes e pratique o padrão POM!
-
+**Author:** Gregory Oliveira Pina  
+**QA Automation Engineer**
