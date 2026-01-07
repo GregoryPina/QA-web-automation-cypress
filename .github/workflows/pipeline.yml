@@ -11,11 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     name: E2E Tests (Chrome)
     steps:
-      - name:  Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name:  Play Cypress tests
-        uses: cypress-io/github-action@v6
+      - name: install Node.js
+        uses: actions/setup-node@v4
         with:
-          browser: chrome
-          install-command: npm install
+          node-version: 20
+
+      - name: install
+        run: |
+          npm install
+          npx cypress install
+
+      - name: Run cypress tests
+        run: npx cypress run --browser chrome
