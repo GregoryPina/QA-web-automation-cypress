@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     name: E2E Tests (Chrome)
     steps:
-      - name:  Checkout do Código
+      - name:  Checkout code
         uses: actions/checkout@v4
 
-      - name:  Rodar Testes Cypress
+      - name:  Play Cypress tests
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-         
+          install-command: npm install
