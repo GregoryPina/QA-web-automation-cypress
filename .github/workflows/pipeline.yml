@@ -14,15 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
+      # Passo 1: Nós instalamos as dependências do jeito "bagunçado" (sem lockfile)
       - name: install
-        run: |
-          npm install
-          npx cypress install
+        run: npm install
 
+      # Passo 2: Chamamos o especialista só para rodar (ele traz as libs do Linux)
       - name: Run cypress tests
-        run: npx cypress run --browser chrome
+        uses: cypress-io/github-action@v6
+        with:
+          install: false  # "Não tente instalar, eu já fiz isso acima"
+          browser: chrome
+          start: npm run cypress:run -- --browser chrome # Força o comando de execução
